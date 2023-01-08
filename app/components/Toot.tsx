@@ -84,14 +84,14 @@ function Actions({ toot }: { toot: Mastodon.Toot }) {
         disabled={loading}
         value={toot.favourited ? "unreblog" : "reblog"}
       >
-        {toot.reblogged ? "Unboost" : "Boost"} {toot.reblogs_count}
+        {toot.reblogged ? "Unboost" : "Boost"}
       </button>
       <button
         name="_action"
         disabled={loading}
         value={toot.favourited ? "unfavourite" : "favourite"}
       >
-        {toot.favourited ? "Unfavorite" : "Favorite"} {toot.favourites_count}
+        {toot.favourited ? "Unfavorite" : "Favorite"}
       </button>
       <button
         name="_action"
