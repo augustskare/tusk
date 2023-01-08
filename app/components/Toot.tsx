@@ -108,24 +108,11 @@ function Media(props: { media: Mastodon.Toot["media_attachments"] }) {
   return (
     <div className="gallery">
       {props.media.map((media) => {
-        if (media.type === "image") {
-          return (
-            <a key={media.id} href={media.url}>
-              <img
-                className="media"
-                src={media.preview_url}
-                width={media.meta.original.width}
-                height={media.meta.original.height}
-                alt=""
-              />
-            </a>
-          );
-        }
         if (media.type === "video") {
           return (
             <video
               key={media.id}
-              src={media.remote_url}
+              src={media.url}
               controls
               playsInline
               muted
@@ -139,7 +126,7 @@ function Media(props: { media: Mastodon.Toot["media_attachments"] }) {
           return (
             <video
               key={media.id}
-              src={media.remote_url}
+              src={media.url}
               playsInline
               muted
               autoPlay
@@ -151,8 +138,20 @@ function Media(props: { media: Mastodon.Toot["media_attachments"] }) {
         }
 
         if (media.type === "audio") {
-          return <audio key={media.id} src={media.remote_url} />;
+          return <audio key={media.id} src={media.url} />;
         }
+
+        return (
+          <a key={media.id} href={media.url}>
+            <img
+              className="media"
+              src={media.preview_url}
+              width={media.meta.original.width}
+              height={media.meta.original.height}
+              alt=""
+            />
+          </a>
+        );
       })}
     </div>
   );
