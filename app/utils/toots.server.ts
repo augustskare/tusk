@@ -102,11 +102,11 @@ export function tootToAst(
 
       if (node.type === "text") {
         const value = node.value;
-        const parts = value.split(/(:.*?:)/);
+        const parts = value.split(/(:\w*?:)/);
         let t = [];
         for (const p in parts) {
           const part = parts[p];
-          const emoji = part.match(/:(.*?):/);
+          const emoji = part.match(/:(\w*?):/);
           if (emoji) {
             const [value, shortcode] = emoji;
             t.push({
