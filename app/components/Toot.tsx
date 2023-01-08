@@ -167,9 +167,9 @@ function TootContent(props: { nodes: Elements[] }) {
             return <br key={index} />;
           }
 
-          if (d.tagName === "a" && d.card) {
+          /* if (d.tagName === "a" && d.card) {
             return null;
-          }
+          } */
 
           return createElement(
             d.tagName,
