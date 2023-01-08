@@ -119,6 +119,11 @@ small, .small {
   border-block-end: 1px solid var(--gray6);
   padding-block: .75rem;
   padding-inline: .5rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .highlighted {
