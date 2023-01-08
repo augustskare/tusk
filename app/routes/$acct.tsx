@@ -26,42 +26,54 @@ export default function Profile() {
 
   return (
     <>
-      <div
-        style={{ borderBlockEnd: "1px solid var(--gray6)", padding: ".5rem" }}
-      >
-        <header>
-          <img width={40} height={40} src={profile.avatar} alt="" />
-          <h1>{profile.display_name}</h1>
+      <div className="user-profile">
+        <header className="profile-header">
+          <img className="header-image" src={profile.header} alt="" />
+          <div className="name">
+            <img
+              className="avatar"
+              width={56}
+              height={56}
+              src={profile.avatar}
+              alt=""
+            />
+            <h1>
+              {profile.display_name}{" "}
+              <small className="muted">@{profile.acct}</small>
+            </h1>
+          </div>
         </header>
-        <div dangerouslySetInnerHTML={{ __html: profile.note }} />
+        <div>
+          <div dangerouslySetInnerHTML={{ __html: profile.note }} />
 
-        <dl>
-          <dt>Followers</dt>
-          <dd>
-            <Link to={`/${profile.acct}/followers`}>
-              {profile.followers_count}
-            </Link>
-          </dd>
-          <dt>Following</dt>
-          <dd>
-            <Link to={`/${profile.acct}/following`}>
-              {profile.following_count}
-            </Link>
-          </dd>
-          <dt>Statuses count</dt>
-          <dd>{profile.statuses_count}</dd>
-        </dl>
+          <dl>
+            <dt>Followers</dt>
+            <dd>
+              <Link to={`/${profile.acct}/followers`}>
+                {profile.followers_count}
+              </Link>
+            </dd>
+            <dt>Following</dt>
+            <dd>
+              <Link to={`/${profile.acct}/following`}>
+                {profile.following_count}
+              </Link>
+            </dd>
+            <dt>Statuses count</dt>
+            <dd>{profile.statuses_count}</dd>
+          </dl>
 
-        <dl>
-          {profile.fields.map((field) => {
-            return (
-              <Fragment key={field.name}>
-                <dt>{field.name}</dt>
-                <dd dangerouslySetInnerHTML={{ __html: field.value }} />
-              </Fragment>
-            );
-          })}
-        </dl>
+          <dl>
+            {profile.fields.map((field) => {
+              return (
+                <Fragment key={field.name}>
+                  <dt>{field.name}</dt>
+                  <dd dangerouslySetInnerHTML={{ __html: field.value }} />
+                </Fragment>
+              );
+            })}
+          </dl>
+        </div>
       </div>
 
       <Outlet />
