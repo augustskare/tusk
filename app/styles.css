@@ -13,6 +13,10 @@
 }
 
 :root {
+  --offset-start: max(.5rem, env(safe-area-inset-left));
+  --offset-end: max(.5rem, env(safe-area-inset-right));
+
+
   --gray1: hsl(0, 0%, 99.0%);
   --gray2: hsl(0, 0%, 97.3%);
   --gray3: hsl(0, 0%, 95.1%);
@@ -45,6 +49,9 @@
   }
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   background-color: var(--gray1);
@@ -80,7 +87,8 @@ small, .small {
 
 
 .site-header {
-  padding: .5rem;
+  padding-block: .5rem;
+  padding-inline: var(--offset-start) var(--offset-end);
   border-block-end: 1px solid var(--gray6);
   display: flex;
   justify-content: space-between;
@@ -118,7 +126,7 @@ small, .small {
 .toot {
   border-block-end: 1px solid var(--gray6);
   padding-block: .75rem;
-  padding-inline: .5rem;
+  padding-inline: var(--offset-start) var(--offset-end);
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
@@ -173,12 +181,14 @@ small, .small {
 
 
 .user-profile > div {
-  padding: .5rem;
+  padding-block: .5rem;
+  padding-inline: var(--offset-start) var(--offset-end);
   border-block-end: 1px solid var(--gray6);
 }
   
 .profile-header .name {
-  padding: .5rem;
+  padding-block: .5rem;
+  padding-inline: var(--offset-start) var(--offset-end);
   display: flex;
   align-items: flex-end;
   gap: .5rem;
