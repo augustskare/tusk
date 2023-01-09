@@ -7,8 +7,7 @@ export const userSession = createCookieSessionStorage({
     secrets: [process.env.COOKIE_SECRET || "supersecret"],
     sameSite: "lax",
     path: "/",
-    /* how long is the session valid? */
-    /* maxAge: 86400, */
+    maxAge: 31556926,
     httpOnly: true,
   },
 });
