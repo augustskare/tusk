@@ -5,6 +5,8 @@ const formatter2 = new Intl.DateTimeFormat("en", {
   month: "short",
   day: "numeric",
   year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
 });
 function daysAgo(dateString: string) {
   const date = new Date(dateString);
