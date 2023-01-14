@@ -30,6 +30,38 @@
   --gray11: hsl(0, 0%, 43.5%);
   --gray12: hsl(0, 0%, 9.0%);
 
+  --plum1: hsl(292, 90.0%, 99.4%);
+  --plum2: hsl(300, 100%, 98.6%);
+  --plum3: hsl(299, 71.2%, 96.4%);
+  --plum4: hsl(299, 62.0%, 93.8%);
+  --plum5: hsl(298, 56.1%, 90.5%);
+  --plum6: hsl(296, 51.3%, 85.8%);
+  --plum7: hsl(295, 48.2%, 78.9%);
+  --plum8: hsl(292, 47.7%, 70.8%);
+  --plum9: hsl(292, 45.0%, 51.0%);
+  --plum10: hsl(292, 50.2%, 46.9%);
+  --plum11: hsl(292, 60.0%, 42.5%);
+  --plum12: hsl(291, 66.0%, 14.0%);
+
+  --tomato11: hsl(10, 82.0%, 43.5%);
+  --green11: hsl(153, 67.0%, 28.5%);
+  
+  --blue11: hsl(211, 100%, 43.2%);
+
+
+  --yellow1: hsl(60, 54.0%, 98.5%);
+  --yellow2: hsl(52, 100%, 95.5%);
+  --yellow3: hsl(55, 100%, 90.9%);
+  --yellow4: hsl(54, 100%, 86.6%);
+  --yellow5: hsl(52, 97.9%, 82.0%);
+  --yellow6: hsl(50, 89.4%, 76.1%);
+  --yellow7: hsl(47, 80.4%, 68.0%);
+  --yellow8: hsl(48, 100%, 46.1%);
+  --yellow9: hsl(53, 92.0%, 50.0%);
+  --yellow10: hsl(50, 100%, 48.5%);
+  --yellow11: hsl(42, 100%, 29.0%);
+  --yellow12: hsl(40, 55.0%, 13.5%);
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,6 +78,37 @@
     --gray10: hsl(0, 0%, 49.4%);
     --gray11: hsl(0, 0%, 62.8%);
     --gray12: hsl(0, 0%, 93.0%);
+
+    --plum1: hsl(301, 20.0%, 9.4%);
+    --plum2: hsl(300, 29.8%, 11.2%);
+    --plum3: hsl(298, 34.4%, 15.3%);
+    --plum4: hsl(297, 36.8%, 18.3%);
+    --plum5: hsl(296, 38.5%, 21.1%);
+    --plum6: hsl(295, 40.4%, 24.7%);
+    --plum7: hsl(294, 42.7%, 30.6%);
+    --plum8: hsl(292, 45.1%, 40.0%);
+    --plum9: hsl(292, 45.0%, 51.0%);
+    --plum10: hsl(295, 50.0%, 55.4%);
+    --plum11: hsl(300, 60.0%, 62.0%);
+    --plum12: hsl(296, 74.0%, 95.7%);
+
+    --tomato11: hsl(10, 85.0%, 62.8%);
+    --green11: hsl(151, 50.0%, 53.2%);
+    
+    --blue11: hsl(210, 100%, 66.1%);
+
+    --yellow1: hsl(45, 100%, 5.5%);
+    --yellow2: hsl(46, 100%, 6.7%);
+    --yellow3: hsl(45, 100%, 8.7%);
+    --yellow4: hsl(45, 100%, 10.4%);
+    --yellow5: hsl(47, 100%, 12.1%);
+    --yellow6: hsl(49, 100%, 14.3%);
+    --yellow7: hsl(49, 90.3%, 18.4%);
+    --yellow8: hsl(50, 100%, 22.0%);
+    --yellow9: hsl(53, 92.0%, 50.0%);
+    --yellow10: hsl(54, 100%, 68.0%);
+    --yellow11: hsl(48, 100%, 47.0%);
+    --yellow12: hsl(53, 100%, 91.0%);
   }
 }
 
@@ -82,6 +145,15 @@ small, .small {
 .emoji  {
   height: 1em;
   width: 1em;
+}
+
+a {
+  color: var(--plum11);
+}
+
+a:visited {
+  color: var(--plum12);
+
 }
 
 
@@ -158,18 +230,35 @@ small, .small {
   font-size: 1rem;
 }
 
-.details {
-  display: flex;
-}
-
-.details dd {
-  margin-inline-start: .125rem;
-  margin-inline-end: .5rem;
-}
-
 .actions {
   display: flex;
   gap: .5rem;
+}
+.actions button {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--gray12);
+  background-color: var(--gray3);
+  border: 1px solid var(--gray6);
+  border-radius: .25rem;
+  padding: .25rem .5rem;
+
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+
+
+}
+
+.actions button:hover {
+  color: var(--gray11);
+  background-color: var(--gray4);
+  border-color: var(--gray8);
+}
+
+.actions button:active {
+  background-color: var(--yellow5);
+  border-color: var(--yellow7);
 }
 
 .gallery img, .gallery video {
@@ -205,3 +294,4 @@ small, .small {
   object-fit: cover;
   vertical-align: top;
 }
+

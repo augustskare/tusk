@@ -6,6 +6,12 @@ import type { Mastodon } from "~/utils/mastodon";
 
 import { DisplayName } from "./DisplayName";
 import { Time } from "./Time";
+import {
+  BookmarkIcon,
+  RocketIcon,
+  StarIcon,
+  ChatBubbleIcon,
+} from "@radix-ui/react-icons";
 
 function Toot(
   props: Omit<Mastodon.Toot, "content"> & {
@@ -47,19 +53,6 @@ function Toot(
 
       <Media media={toot.media_attachments} />
 
-      <footer className="small">
-        <dl className="details">
-          <dt>Boosted</dt>
-          <dd>{toot.reblogs_count}</dd>
-
-          <dt>Favourites</dt>
-          <dd>{toot.favourites_count}</dd>
-
-          <dt>Replies</dt>
-          <dd>{toot.replies_count}</dd>
-        </dl>
-      </footer>
-
       <Actions toot={toot} />
 
       {props.reblog ? (
@@ -89,22 +82,36 @@ function Actions({ toot }: { toot: Mastodon.Toot }) {
         name="_action"
         disabled={loading}
         value={toot.favourited ? "unreblog" : "reblog"}
+        className="boost"
       >
-        {toot.reblogged ? "Unboost" : "Boost"}
+        <RocketIcon />
+        {toot.reblogs_count}{" "}
+        <span hidden>boosted. {toot.reblogged ? "Unboost" : "Boost"}</span>
       </button>
       <button
         name="_action"
         disabled={loading}
         value={toot.favourited ? "unfavourite" : "favourite"}
+        className="like"
       >
-        {toot.favourited ? "Unfavorite" : "Favorite"}
+        <StarIcon />
+        {toot.favourites_count}{" "}
+        <span hidden>
+          favorited. {toot.favourited ? "Unfavorite" : "Favorite"}
+        </span>
+      </button>
+      <button name="_action" disabled={loading} className="reply">
+        <ChatBubbleIcon />
+        {toot.replies_count}
       </button>
       <button
         name="_action"
         disabled={loading}
         value={toot.bookmarked ? "unbookmark" : "bookmark"}
+        className="bookmark"
       >
-        {toot.bookmarked ? "Unbookmark" : "Bookmark"}
+        <BookmarkIcon />
+        <span hidden>{toot.bookmarked ? "Unbookmark" : "Bookmark"}</span>
       </button>
     </Form>
   );
