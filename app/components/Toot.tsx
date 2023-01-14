@@ -148,7 +148,7 @@ function Media(props: { media: Mastodon.Toot["media_attachments"] }) {
               src={media.preview_url}
               width={media.meta.original.width}
               height={media.meta.original.height}
-              alt=""
+              alt={media.description || ""}
             />
           </a>
         );
