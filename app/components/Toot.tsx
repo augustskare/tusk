@@ -20,7 +20,13 @@ function Toot(
       lang={toot.language || undefined}
     >
       <header>
-        <img src={toot.account.avatar} width={28} height={28} alt="" />
+        <img
+          className="avatar"
+          src={toot.account.avatar}
+          width={28}
+          height={28}
+          alt=""
+        />
         <p>
           <DisplayName
             display_name={toot.account.display_name}
