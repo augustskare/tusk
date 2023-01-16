@@ -50,9 +50,11 @@ export function tootToAst(
 ) {
   const cardUrl = options.card?.url ? new URL(options.card?.url) : undefined;
 
-  return fromHtml(
+  const t = fromHtml(
     hastFromHtml(content, { fragment: true }).children
   ) as Elements[];
+
+  return t;
 
   function fromHtml(nodes: RootContent[] | ElementContent[]) {
     return nodes.map((node) => {
@@ -103,15 +105,15 @@ export function tootToAst(
       if (node.type === "text") {
         const value = node.value;
         const parts = value.split(/(:\w*?:)/);
+
         let t = [];
         for (const p in parts) {
           const part = parts[p];
           const emoji = part.match(/:(\w*?):/);
           if (emoji) {
-            const [value, shortcode] = emoji;
+            const [, shortcode] = emoji;
             t.push({
               type: "emoji",
-              value,
               shortcode,
               ...options.emojis.find((e) => e.shortcode === shortcode),
             });
@@ -130,7 +132,6 @@ export function tootToAst(
 
 type Emoji = {
   type: "emoji";
-  value: string;
 } & Mastodon.Emoji;
 
 interface Mention {
@@ -169,3 +170,68 @@ interface AnchorElement extends Omit<BaseElement, "tagName"> {
 }
 
 export type Elements = TextElement | Element | AnchorElement;
+
+export interface Toot extends Omit<Mastodon.Toot, "content" | "reblog"> {
+  content: Element[] | null;
+  reblog: Toot;
+}
+
+/* interface Toot {
+  id: string;
+  created_at: string;
+  in_reply_to_id: null;
+  in_reply_to_account_id: null;
+  sensitive: boolean;
+  spoiler_text: string;
+  visibility: "public" | string;
+  language: string | null;
+  uri: string;
+  url: string | null;
+  replies_count: number;
+  reblogs_count: number;
+  favourites_count: number;
+  edited_at: string | null;
+  favourited: boolean;
+  reblogged: boolean;
+  muted: boolean;
+  bookmarked: boolean;
+  content: string;
+  filtered: [];
+  reblog: Toot | null;
+  account: Account;
+  media_attachments: Attachment[];
+  mentions: [];
+  tags: {
+    name: string;
+    url: string;
+  }[];
+  emojis: Emoji[];
+  card: {
+    url: string;
+    title: string;
+    description: string;
+    type: string;
+    author_name: string;
+    author_url: string;
+    provider_name: string;
+    provider_url: string;
+    html: string;
+    width: number;
+    height: number;
+    image: string | null;
+    embed_url: string;
+    blurhash: string | null;
+  } | null;
+  poll: {
+    id: string;
+    expires_at: string;
+    expired: boolean;
+    multiple: boolean;
+    votes_count: number;
+    voters_count: number;
+    voted: boolean;
+    own_votes: [];
+    options: { title: string; vote_count: number }[];
+    emojis: Emoji[];
+  } | null;
+} */

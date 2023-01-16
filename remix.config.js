@@ -1,6 +1,9 @@
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
   ignoredRouteFiles: ["**/.*"],
+  future: {
+    unstable_vanillaExtract: true,
+  },
   serverDependenciesToBundle: [
     /^hast.*/,
     /^vfile.*/,

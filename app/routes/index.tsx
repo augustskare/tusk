@@ -19,7 +19,7 @@ export async function loader({ request }: LoaderArgs) {
   } catch (error) {
     timeline = await $fetch<Mastodon.Toot[]>(
       "timelines/public",
-      undefined,
+      { params: { limit: "40" } },
       request
     );
   }
@@ -29,6 +29,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export default function Index() {
   const { timeline } = useLoaderData<typeof loader>();
+
   return (
     <ol>
       {timeline.map((toot) => {

@@ -24,7 +24,10 @@ export declare namespace Mastodon {
     account: Account;
     media_attachments: Attachment[];
     mentions: [];
-    tags: [];
+    tags: {
+      name: string;
+      url: string;
+    }[];
     emojis: Emoji[];
     card: {
       url: string;
@@ -77,7 +80,7 @@ export declare namespace Mastodon {
     display_name: string;
     locked: boolean;
     bot: boolean;
-    discoverable: true;
+    discoverable: boolean;
     group: boolean;
     created_at: string;
     note: string;

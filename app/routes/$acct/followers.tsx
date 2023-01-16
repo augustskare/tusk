@@ -34,13 +34,7 @@ export default function ProfileFollowers() {
     <ul>
       {accounts.map((account) => {
         return (
-          <li
-            key={account.id}
-            style={{
-              borderBlockEnd: "1px solid var(--gray6)",
-              padding: ".5rem",
-            }}
-          >
+          <li key={account.id}>
             <DisplayName
               acct={account.acct}
               display_name={account.display_name}

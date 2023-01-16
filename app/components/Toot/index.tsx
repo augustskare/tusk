@@ -1,11 +1,10 @@
 import { createElement } from "react";
 import { Form, Link, useTransition } from "@remix-run/react";
 
-import type { Elements } from "~/utils/toots.server";
-import type { Mastodon } from "~/utils/mastodon";
+import type { Elements, Toot as TootP } from "~/utils/toots.server";
 
-import { DisplayName } from "./DisplayName";
-import { Time } from "./Time";
+import { DisplayName } from "../DisplayName";
+import { Time } from "../Time";
 import {
   BookmarkIcon,
   RocketIcon,
@@ -13,21 +12,25 @@ import {
   ChatBubbleIcon,
 } from "@radix-ui/react-icons";
 
-function Toot(
-  props: Omit<Mastodon.Toot, "content"> & {
-    highlighted?: boolean;
-    content: Elements[];
-  }
-) {
+import * as styles from "./styles.css";
+import { Emoji } from "../Emoji";
+import { sprinkles } from "~/styles/sprinkles.css";
+
+interface TootProps extends TootP {
+  highlighted?: boolean;
+}
+
+function Toot(props: TootProps) {
   const toot = props.reblog || props;
+
   return (
     <article
-      className={`toot ${props.highlighted ? "highlighted" : ""}`}
+      className={styles.toot[props.highlighted ? "highlighted" : "default"]}
       lang={toot.language || undefined}
     >
-      <header>
+      <header className={styles.header}>
         <img
-          className="avatar"
+          className={sprinkles({ borderRadius: "small" })}
           src={toot.account.avatar}
           width={28}
           height={28}
@@ -40,16 +43,20 @@ function Toot(
             emojis={toot.account.emojis}
             showAcct
           />{" "}
-          {toot.in_reply_to_id ? "replyed" : "posted"}{" "}
-          <Link to={`/${toot.account.acct}/s/${toot.id}`}>
-            <Time>{toot.created_at}</Time>
-          </Link>
+          <span className={sprinkles({ fontSize: "small" })}>
+            {toot.in_reply_to_id ? "replyed" : "posted"}{" "}
+            <Link to={`/${toot.account.acct}/s/${toot.id}`}>
+              <Time>{toot.created_at}</Time>
+            </Link>
+          </span>
         </p>
       </header>
 
-      <div>
-        <TootContent nodes={toot.content} />
-      </div>
+      {toot.content ? (
+        <div className={styles.content}>
+          <TootContent nodes={toot.content} />
+        </div>
+      ) : null}
 
       <Media media={toot.media_attachments} />
 
@@ -69,7 +76,7 @@ function Toot(
   );
 }
 
-function Actions({ toot }: { toot: Mastodon.Toot }) {
+function Actions({ toot }: { toot: TootP }) {
   const transition = useTransition();
   const loading = transition.state !== "idle";
   return (
@@ -117,13 +124,14 @@ function Actions({ toot }: { toot: Mastodon.Toot }) {
   );
 }
 
-function Media(props: { media: Mastodon.Toot["media_attachments"] }) {
+function Media(props: { media: TootP["media_attachments"] }) {
   return (
     <div className="gallery">
       {props.media.map((media) => {
         if (media.type === "video") {
           return (
             <video
+              className={styles.media}
               key={media.id}
               src={media.url}
               controls
@@ -138,6 +146,7 @@ function Media(props: { media: Mastodon.Toot["media_attachments"] }) {
         if (media.type === "gifv") {
           return (
             <video
+              className={styles.media}
               key={media.id}
               src={media.url}
               playsInline
@@ -153,17 +162,15 @@ function Media(props: { media: Mastodon.Toot["media_attachments"] }) {
         if (media.type === "audio") {
           return <audio key={media.id} src={media.url} />;
         }
-
         return (
-          <a key={media.id} href={media.url}>
-            <img
-              className="media"
-              src={media.preview_url}
-              width={media.meta.original.width}
-              height={media.meta.original.height}
-              alt={media.description || ""}
-            />
-          </a>
+          <img
+            key={media.id}
+            className={styles.media}
+            src={media.preview_url}
+            width={media.meta.original.width}
+            height={media.meta.original.height}
+            alt={media.description || ""}
+          />
         );
       })}
     </div>
@@ -193,9 +200,7 @@ function TootContent(props: { nodes: Elements[] }) {
           );
         }
         if (d.type === "emoji") {
-          return (
-            <img key={index} src={d.url} alt={d.shortcode} className="emoji" />
-          );
+          return <Emoji key={index} {...d} />;
         }
         if (d.type === "text") {
           return d.value;

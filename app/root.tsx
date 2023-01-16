@@ -10,13 +10,15 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import type { Mastodon } from "./utils/mastodon";
+import { cssBundleHref } from "@remix-run/css-bundle";
 
-import cssFile from "./styles.css";
+import type { Mastodon } from "./utils/mastodon";
 import { $fetch } from "./utils/$fetch.server";
 
+import * as styles from "./styles/global.css";
+
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: cssFile },
+  { rel: "stylesheet", href: cssBundleHref || "" },
 ];
 
 export const meta: MetaFunction = () => ({
@@ -51,9 +53,9 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <header className="site-header">
-          <h1>
+      <body className={styles.body}>
+        <header className={styles.header}>
+          <h1 className={styles.logo}>
             <Link to="/">Tusk</Link>
           </h1>
 

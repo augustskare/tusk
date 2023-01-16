@@ -9,20 +9,24 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-icons": "^1.1.1",
-    "@remix-run/node": "^1.9.0",
-    "@remix-run/react": "^1.9.0",
-    "@remix-run/serve": "^1.9.0",
+    "@remix-run/css-bundle": "^0.0.0-nightly-2c398e4-20230104",
+    "@remix-run/node": "^0.0.0-nightly-d593e4a-20230114",
+    "@remix-run/react": "^0.0.0-nightly-d593e4a-20230114",
+    "@remix-run/serve": "^0.0.0-nightly-d593e4a-20230114",
     "hast-util-from-html": "^1.0.0",
     "isbot": "^3.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.9.0",
+    "@remix-run/dev": "^0.0.0-nightly-d593e4a-20230114",
     "@remix-run/eslint-config": "^1.9.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "@vanilla-extract/css": "^1.9.2",
+    "@vanilla-extract/sprinkles": "^1.5.1",
     "eslint": "^8.27.0",
     "hast": "^1.0.0",
     "prettier": "2.8.1",
