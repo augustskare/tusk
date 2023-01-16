@@ -15,6 +15,7 @@ import {
 import * as styles from "./styles.css";
 import { Emoji } from "../Emoji";
 import { sprinkles } from "~/styles/sprinkles.css";
+import { Mastodon } from "~/utils/mastodon";
 
 interface TootProps extends TootP {
   highlighted?: boolean;
@@ -58,12 +59,15 @@ function Toot(props: TootProps) {
         </div>
       ) : null}
 
-      <Media media={toot.media_attachments} />
+      <Attachments attachments={toot.media_attachments} />
 
       <Actions toot={toot} />
 
       {props.reblog ? (
-        <aside className="small" style={{ marginBlockStart: ".5rem" }}>
+        <aside
+          className={sprinkles({ fontSize: "small" })}
+          style={{ marginBlockStart: ".5rem" }}
+        >
           Boosted by{" "}
           <DisplayName
             display_name={props.account.display_name}
@@ -124,56 +128,64 @@ function Actions({ toot }: { toot: TootP }) {
   );
 }
 
-function Media(props: { media: TootP["media_attachments"] }) {
+function Attachments(props: { attachments: Mastodon.Attachment[] }) {
+  if (!props.attachments.length) {
+    return null;
+  }
+
+  if (props.attachments.length === 1) {
+    return (
+      <Attachment className={styles.media} attachment={props.attachments[0]} />
+    );
+  }
+
   return (
-    <div className="gallery">
-      {props.media.map((media) => {
-        if (media.type === "video") {
-          return (
-            <video
-              className={styles.media}
-              key={media.id}
-              src={media.url}
-              controls
-              playsInline
-              muted
-              width={media.meta.original.width}
-              height={media.meta.original.height}
-            />
-          );
-        }
-
-        if (media.type === "gifv") {
-          return (
-            <video
-              className={styles.media}
-              key={media.id}
-              src={media.url}
-              playsInline
-              muted
-              autoPlay
-              loop
-              width={media.meta.original.width}
-              height={media.meta.original.height}
-            />
-          );
-        }
-
-        if (media.type === "audio") {
-          return <audio key={media.id} src={media.url} />;
-        }
-        return (
-          <img
-            key={media.id}
-            className={styles.media}
-            src={media.preview_url}
-            width={media.meta.original.width}
-            height={media.meta.original.height}
-            alt={media.description || ""}
-          />
-        );
-      })}
+    <div className={props.attachments.length > 1 ? styles.gallery : undefined}>
+      {props.attachments.map((attachment) => (
+        <Attachment
+          className={styles.galleryItem}
+          key={attachment.id}
+          attachment={attachment}
+        />
+      ))}
     </div>
+  );
+}
+
+function Attachment({
+  attachment,
+  className,
+}: {
+  attachment: Mastodon.Attachment;
+  className?: string;
+}) {
+  if (attachment.type === "audio") {
+    return <audio className={className} src={attachment.url} controls />;
+  }
+  if (attachment.type === "video" || attachment.type === "gifv") {
+    return (
+      <video
+        className={className}
+        src={attachment.url}
+        playsInline
+        muted
+        width={attachment.meta.original.width}
+        height={attachment.meta.original.height}
+        controls={attachment.type === "video"}
+        autoPlay={attachment.type === "gifv"}
+        loop={attachment.type === "gifv"}
+      />
+    );
+  }
+
+  return (
+    <img
+      className={className}
+      src={attachment.preview_url}
+      width={attachment.meta.original.width}
+      height={attachment.meta.original.height}
+      alt={attachment.description || ""}
+    />
   );
 }
 

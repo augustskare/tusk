@@ -38,7 +38,29 @@ globalStyle(`${content} a`, {
   textDecoration: "underline",
 });
 
+export const gallery = style({
+  display: "grid",
+  gridTemplateColumns: "auto auto",
+  gridTemplateRows: "150px 150px",
+  gap: ".125rem",
+  borderRadius: ".25rem",
+  overflow: "hidden",
+  marginBlock: ".5rem",
+});
+
+export const galleryItem = style({
+  objectFit: "cover",
+  width: "100%",
+  height: "100%",
+  selectors: {
+    [`${gallery}:has(&:last-of-type:nth-of-type(odd)) &:first-of-type`]: {
+      gridRow: "1 / -1",
+    },
+  },
+});
+
 export const media = style({
   maxWidth: "80%",
   height: "auto",
+  marginBlock: ".5rem",
 });
